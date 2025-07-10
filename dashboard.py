@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import ta  # pip install ta
 import streamlit_authenticator as stauth
+from streamlit_authenticator.hasher import Hasher
+
 
 # ---- PAGE CONFIG ----
 st.set_page_config(page_title="Stock Dashboard", layout="wide")
