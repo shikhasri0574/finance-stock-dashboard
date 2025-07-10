@@ -14,7 +14,8 @@ names = ["Shikha Srivastava", "Guest User"]
 usernames = ["shikha", "guest"]
 # Removed redundant import and use Hasher from stauth
 passwords = ["123", "guest123"]
-hashed_pw = stauth.Hasher(passwords).generate()
+hashed_pw = stauth.Hasher().generate(passwords)
+
 
 # Hash passwords using stauth.Hasher
 # If you have a different method, replace this with your hashing logic
