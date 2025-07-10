@@ -8,7 +8,7 @@ st.set_page_config(page_title="Stock Dashboard", layout="wide")
 st.title("📈 Multi-Stock Price Dashboard")
 
 # --- Sidebar Selection ---
-tickers = ['TCS.NS', 'INFY.NS', 'RELIANCE.NS', 'TSLA', 'AAPL', 'GOOG']
+tickers = ['TCS.NS', 'INFY.NS', 'RELIANCE.NS', 'TSLA', 'AAPL', 'GOOG','HDFCBANK.NS', 'ICICIBANK.NS','MSFT', 'AMZN', 'META']
 selected = st.multiselect("Select stocks to compare", tickers, default=['TCS.NS', 'AAPL'])
 
 start = st.date_input("Start date", pd.to_datetime("2020-01-01"))
