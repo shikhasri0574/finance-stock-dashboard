@@ -1,6 +1,9 @@
 streamlit
 yfinance
-pandas
 matplotlib
+pandas
 ta
+streamlit-authenticator
+PyYAML
 plotly
+seaborn
