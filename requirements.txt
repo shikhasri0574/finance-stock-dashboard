@@ -1,9 +1,7 @@
 streamlit
+streamlit-authenticator==0.2.3
 yfinance
 matplotlib
 pandas
 ta
-streamlit-authenticator
-PyYAML
-plotly
-seaborn
+pyyaml
