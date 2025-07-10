@@ -4,9 +4,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import ta  # pip install ta
 import streamlit_authenticator as stauth
-from pathlib import Path
-import yaml
-from yaml.loader import SafeLoader
 
 # ---- PAGE CONFIG ----
 st.set_page_config(page_title="Stock Dashboard", layout="wide")
@@ -34,14 +31,13 @@ if auth_status is False:
 elif auth_status is None:
     st.warning("⚠️ Please enter your credentials.")
 elif auth_status:
-## corrected indentation
     authenticator.logout("Logout", "sidebar")
     st.sidebar.success(f"👋 Welcome {name}!")
 
     st.title("📈 Multi-Stock Price Dashboard")
 
-# --- Sidebar Selection ---
-    tickers = ['TCS.NS', 'INFY.NS', 'RELIANCE.NS', 'TSLA', 'AAPL', 'GOOG']
+    # --- Sidebar Selection ---
+    tickers = ['TCS.NS', 'INFY.NS', 'RELIANCE.NS', 'TSLA', 'AAPL', 'GOOG', 'MSFT', 'AMZN', 'META']
     selected = st.multiselect("Select stocks to compare", tickers, default=['TCS.NS', 'AAPL'])
 
     start = st.date_input("Start date", pd.to_datetime("2020-01-01"))
