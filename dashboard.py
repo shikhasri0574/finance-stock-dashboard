@@ -40,9 +40,9 @@ elif auth_status:
 
     st.title("📈 Multi-Stock Price Dashboard")
 
-    # ---- STOCK SELECTION ----
-    tickers = ['TCS.NS', 'INFY.NS', 'RELIANCE.NS', 'TSLA', 'AAPL', 'GOOG', 'MSFT', 'AMZN', 'META']
-    selected = st.multiselect("Select stocks to compare", tickers, default=['TCS.NS', 'AAPL'])
+# --- Sidebar Selection ---
+tickers = ['TCS.NS', 'INFY.NS', 'RELIANCE.NS', 'TSLA', 'AAPL', 'GOOG']
+selected = st.multiselect("Select stocks to compare", tickers, default=['TCS.NS', 'AAPL'])
 
     start = st.date_input("Start date", pd.to_datetime("2020-01-01"))
     end = st.date_input("End date", pd.to_datetime("2024-12-31"))
