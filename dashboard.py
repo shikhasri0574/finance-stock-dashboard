@@ -14,7 +14,7 @@ st.set_page_config(page_title="Stock Dashboard", layout="wide")
 names = ["Shikha Srivastava", "Guest User"]
 usernames = ["shikha", "guest"]
 passwords = ["123", "guest123"]
-hashed_pw = stauth.Hasher().generate(passwords)  # ✅ correct
+hashed_pw = stauth.Hasher(passwords).generate()   # ✅ correct
 # Hash passwords using stauth.Hasher
 # If you have a different method, replace this with your hashing logic
 credentials = {
