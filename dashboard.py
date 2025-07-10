@@ -5,20 +5,17 @@ import pandas as pd
 import ta  # pip install ta
 import streamlit_authenticator as stauth
 
+# ---------------------- PAGE CONFIG ----------------------
+st.set_page_config(page_title="📊 Finance Dashboard", layout="wide")
 
-# ---- PAGE CONFIG ----
-st.set_page_config(page_title="Stock Dashboard", layout="wide")
-
-# ---- USER AUTH ----
+# ---------------------- LOGIN SYSTEM ----------------------
 names = ["Shikha Srivastava", "Guest User"]
 usernames = ["shikha", "guest"]
-# Removed redundant import and use Hasher from stauth
 passwords = ["123", "guest123"]
+
+# Hash passwords (for older streamlit-authenticator)
 hashed_pw = stauth.Hasher().generate(passwords)
 
-
-# Hash passwords using stauth.Hasher
-# If you have a different method, replace this with your hashing logic
 credentials = {
     "usernames": {
         usernames[i]: {
@@ -39,16 +36,20 @@ elif auth_status:
     authenticator.logout("Logout", "sidebar")
     st.sidebar.success(f"👋 Welcome {name}!")
 
+    # ------------------ DASHBOARD TITLE ------------------
     st.title("📈 Multi-Stock Price Dashboard")
 
-    # --- Sidebar Selection ---
-    tickers = ['TCS.NS', 'INFY.NS', 'RELIANCE.NS', 'TSLA', 'AAPL', 'GOOG', 'MSFT', 'AMZN', 'META']
+    # ------------------ STOCK SELECTION ------------------
+    tickers = [
+        'TCS.NS', 'INFY.NS', 'RELIANCE.NS', 'TSLA', 'AAPL',
+        'GOOG', 'MSFT', 'AMZN', 'META'
+    ]
     selected = st.multiselect("Select stocks to compare", tickers, default=['TCS.NS', 'AAPL'])
 
     start = st.date_input("Start date", pd.to_datetime("2020-01-01"))
     end = st.date_input("End date", pd.to_datetime("2024-12-31"))
 
-    # ---- COMPANY INFO ----
+    # ------------------ COMPANY INFO ------------------
     company_info = {
         'TCS.NS': {'name': 'Tata Consultancy Services', 'sector': 'IT', 'logo': 'https://companiesmarketcap.com/img/company-logos/128/TCS.NS.png'},
         'INFY.NS': {'name': 'Infosys', 'sector': 'IT', 'logo': 'https://companiesmarketcap.com/img/company-logos/128/INFY.NS.png'},
@@ -61,7 +62,7 @@ elif auth_status:
         'META': {'name': 'Meta Platforms, Inc.', 'sector': 'Social Media', 'logo': 'https://companiesmarketcap.com/img/company-logos/128/META.png'}
     }
 
-    # ---- SIDEBAR COMPANY INFO ----
+    # ------------------ SIDEBAR COMPANY INFO ------------------
     for stock in selected:
         info = company_info.get(stock)
         if info:
@@ -70,7 +71,7 @@ elif auth_status:
             st.sidebar.caption(f"Sector: {info['sector']}")
             st.sidebar.markdown("---")
 
-    # ---- DATA FETCH ----
+    # ------------------ FETCH DATA ------------------
     if selected:
         try:
             raw_data = yf.download(selected, start=start, end=end, auto_adjust=True)
@@ -83,19 +84,17 @@ elif auth_status:
             st.error(f"Failed to fetch data: {e}")
             st.stop()
 
-        # ---- TABS ----
+        # ------------------ TABS ------------------
         tab1, tab2, tab3, tab4 = st.tabs([
             "📊 Price Chart", "📈 Normalized Returns", "📥 Download CSV", "📉 Technical Indicators"
         ])
 
-        # --- PRICE CHART ---
         with tab1:
-            st.subheader("Stock Prices Over Time")
+            st.subheader("📊 Stock Prices Over Time")
             st.line_chart(data)
 
-        # --- NORMALIZED RETURN ---
         with tab2:
-            st.subheader("Normalized Returns (Start = 100)")
+            st.subheader("📈 Normalized Returns (Start = 100)")
             norm_data = (data / data.iloc[0]) * 100
             fig, ax = plt.subplots()
             norm_data.plot(ax=ax, figsize=(10, 5))
@@ -103,22 +102,21 @@ elif auth_status:
             ax.set_title("Stock Performance Comparison")
             st.pyplot(fig)
 
-        # --- DOWNLOAD CSV + COMPANY TABLE ---
         with tab3:
-            st.subheader("Download Data")
+            st.subheader("📥 Download CSV")
             csv = data.to_csv().encode('utf-8')
-            st.download_button("📥 Download CSV", data=csv, file_name="selected_stocks_data.csv", mime="text/csv")
+            st.download_button("Download CSV", data=csv, file_name="selected_stocks_data.csv", mime="text/csv")
 
-            company_table = []
+            # Company info table
+            table = []
             for stock in selected:
                 info = company_info.get(stock)
                 if info:
-                    company_table.append({'Ticker': stock, 'Name': info['name'], 'Sector': info['sector']})
-            if company_table:
+                    table.append({'Ticker': stock, 'Name': info['name'], 'Sector': info['sector']})
+            if table:
                 st.subheader("Company Sector Info")
-                st.table(pd.DataFrame(company_table))
+                st.table(pd.DataFrame(table))
 
-        # --- TECHNICAL INDICATORS ---
         with tab4:
             st.subheader("📉 Technical Indicators (SMA + RSI)")
             if len(selected) == 1:
@@ -142,9 +140,7 @@ elif auth_status:
             else:
                 st.info("Select only one stock to view SMA & RSI.")
 
-        # --- RAW DATA PREVIEW ---
         st.write("📊 Raw Data Preview")
         st.dataframe(data.tail())
-
     else:
         st.warning("Please select at least one stock.")
