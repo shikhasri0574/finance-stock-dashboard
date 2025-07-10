@@ -15,6 +15,8 @@ start = st.date_input("Start date", pd.to_datetime("2020-01-01"))
 end = st.date_input("End date", pd.to_datetime("2024-12-31"))
 
 # --- Company Info ---
+# 🚀 Pushing new company additions
+
 company_info = {
     'TCS.NS': {
         'name': 'Tata Consultancy Services',
