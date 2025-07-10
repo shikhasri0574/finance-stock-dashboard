@@ -34,15 +34,15 @@ if auth_status is False:
 elif auth_status is None:
     st.warning("⚠️ Please enter your credentials.")
 elif auth_status:
-
+## corrected indentation
     authenticator.logout("Logout", "sidebar")
     st.sidebar.success(f"👋 Welcome {name}!")
 
     st.title("📈 Multi-Stock Price Dashboard")
 
 # --- Sidebar Selection ---
-tickers = ['TCS.NS', 'INFY.NS', 'RELIANCE.NS', 'TSLA', 'AAPL', 'GOOG']
-selected = st.multiselect("Select stocks to compare", tickers, default=['TCS.NS', 'AAPL'])
+    tickers = ['TCS.NS', 'INFY.NS', 'RELIANCE.NS', 'TSLA', 'AAPL', 'GOOG']
+    selected = st.multiselect("Select stocks to compare", tickers, default=['TCS.NS', 'AAPL'])
 
     start = st.date_input("Start date", pd.to_datetime("2020-01-01"))
     end = st.date_input("End date", pd.to_datetime("2024-12-31"))
