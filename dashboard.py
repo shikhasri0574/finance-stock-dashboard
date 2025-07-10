@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import ta  # pip install ta
 import streamlit_authenticator as stauth
-from streamlit_authenticator.hasher import Hasher
 
 
 # ---- PAGE CONFIG ----
@@ -13,8 +12,10 @@ st.set_page_config(page_title="Stock Dashboard", layout="wide")
 # ---- USER AUTH ----
 names = ["Shikha Srivastava", "Guest User"]
 usernames = ["shikha", "guest"]
+# Removed redundant import and use Hasher from stauth
 passwords = ["123", "guest123"]
-hashed_pw = stauth.Hasher(passwords).generate()   # ✅ correct
+hashed_pw = stauth.Hasher(passwords).generate()
+
 # Hash passwords using stauth.Hasher
 # If you have a different method, replace this with your hashing logic
 credentials = {
